@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Brain, Sparkles, Globe } from "lucide-react";
+import { Menu, X, Cpu, Sparkles, Globe } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useLanguage } from "@/components/language-provider";
 import {
@@ -53,7 +53,7 @@ export function Navigation() {
             aria-label="Scroll to top of page"
           >
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-              <Brain className="h-6 w-6 text-primary absolute" />
+              <Cpu className="h-6 w-6 text-primary absolute" />
               <Sparkles className="h-3 w-3 text-primary absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
