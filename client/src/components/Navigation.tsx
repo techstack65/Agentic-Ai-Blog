@@ -57,7 +57,7 @@ export function Navigation() {
               <Sparkles className="h-3 w-3 text-primary absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-              Antigravity
+              NeuralMind
             </span>
           </button>
 
