@@ -38,18 +38,39 @@ export function ORADiagram() {
       <div className="relative max-w-4xl mx-auto">
         <MermaidDiagram chart={mermaidChart} id="ora-cycle-diagram" />
 
-        <Card className="mt-8 p-6 bg-muted/50 border-border" data-testid="card-ora-legend">
-          <div className="flex items-start gap-3">
-            <RefreshCw className="h-5 w-5 text-primary shrink-0 mt-1" data-testid="icon-refresh" />
-            <div className="space-y-2">
-              <h5 className="font-semibold" data-testid="text-legend-title">Iterative Refinement</h5>
-              <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-legend-description">
-                After observing results, the agent evaluates whether the goal is achieved. If not, it refines its plan 
-                and repeats the cycle, creating a continuous loop of improvement until the objective is met.
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <Card className="p-6 bg-muted/50 border-border" data-testid="card-ora-legend">
+            <div className="flex items-start gap-3">
+              <RefreshCw className="h-5 w-5 text-primary shrink-0 mt-1" data-testid="icon-refresh" />
+              <div className="space-y-2">
+                <h5 className="font-semibold" data-testid="text-legend-title">Iterative Refinement</h5>
+                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-legend-description">
+                  After observing results, the agent evaluates whether the goal is achieved. If not, it refines its plan
+                  and repeats the cycle, creating a continuous loop of improvement until the objective is met.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-muted/50 border-border overflow-hidden">
+            <div className="space-y-3">
+              <h5 className="font-semibold">Video Explanation</h5>
+              <div className="aspect-video bg-black rounded-md overflow-hidden relative group cursor-pointer">
+                <video
+                  className="w-full h-full object-cover"
+                  controls
+                  poster="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop"
+                >
+                  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Watch a visual breakdown of how the Observe-Reason-Act cycle functions in real-time scenarios.
               </p>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     </div>
   );

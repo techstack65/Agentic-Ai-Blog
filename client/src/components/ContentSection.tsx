@@ -21,9 +21,8 @@ export function ContentSection({ id, badge, title, subtitle, children, className
         <div className="space-y-12">
           <div
             ref={ref}
-            className={`space-y-4 text-center max-w-3xl mx-auto transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`space-y-4 text-center max-w-3xl mx-auto transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
           >
             {badge && (
               <Badge variant="outline" className="font-mono">
@@ -73,13 +72,18 @@ export function FeatureList({ items }: FeatureListProps) {
   );
 }
 
+import { TextToSpeech } from "./TextToSpeech";
+
 interface TextContentProps {
   content: string[];
 }
 
 export function TextContent({ content }: TextContentProps) {
+  const fullText = content.join(" ");
+
   return (
     <div className="prose prose-lg max-w-none dark:prose-invert">
+      <TextToSpeech text={fullText} />
       {content.map((paragraph, index) => (
         <p key={index} className="text-foreground/80 leading-relaxed mb-4">
           {paragraph}

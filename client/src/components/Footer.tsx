@@ -16,7 +16,7 @@ export function Footer() {
               <span className="font-heading font-bold text-lg">AI Intelligence Era</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
-              A comprehensive guide to understanding the evolution of AI from Large Language Models to autonomous 
+              A comprehensive guide to understanding the evolution of AI from Large Language Models to autonomous
               AI Agents and Agentic Workflows.
             </p>
           </div>
@@ -53,7 +53,7 @@ export function Footer() {
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2025 AI Intelligence Era. Educational resource on autonomous AI systems.
+            © 2025 Blogtech
           </p>
 
           <Button

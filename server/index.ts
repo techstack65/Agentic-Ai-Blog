@@ -3,6 +3,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 declare module 'http' {
   interface IncomingMessage {
@@ -15,6 +16,7 @@ app.use(express.json({
   }
 }));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('dist/client'));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -71,11 +73,51 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+
+  // Some platforms (notably Windows or restricted run-times) do not support
+  // SO_REUSEPORT. Attempt to listen with reusePort when available, but
+  // fall back to listening without it or on localhost if we receive
+  // an ENOTSUP error.
+  const host = process.env.HOST || "0.0.0.0";
+  const wantReusePort = process.platform !== "win32";
+
+  const startListener = (opts: any) => {
+    server.listen(opts, () => {
+      log(`serving on ${opts.host || opts.address || '0.0.0.0'}:${opts.port}`);
+    });
+  };
+
+  // Also handle asynchronous errors emitted by the server during listen.
+  server.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      log(`Port ${port} is already in use. Please choose another port or stop the process using it.`);
+      process.exit(1);
+    }
+    if (err && err.code === 'ENOTSUP') {
+      log('listen error ENOTSUP — retrying without reusePort and binding to 127.0.0.1');
+      try {
+        // Try to re-listen without reusePort on localhost which is often allowed
+        // in environments where 0.0.0.0 with reusePort is not.
+        startListener({ port, host: '127.0.0.1', reusePort: false });
+      } catch (e) {
+        throw err;
+      }
+    } else {
+      throw err;
+    }
   });
+
+  // Try preferred options first.
+  try {
+    startListener({ port, host, reusePort: wantReusePort });
+  } catch (err: any) {
+    // Synchronous listen errors are uncommon, but handle defensively.
+    if (err && err.code === 'ENOTSUP') {
+      log('listen: reusePort not supported, retrying without reusePort');
+      startListener({ port, host, reusePort: false });
+    } else {
+      // Re-throw so the outer scope can observe the failure.
+      throw err;
+    }
+  }
 })();
